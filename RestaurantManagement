@@ -1,0 +1,105 @@
+import tkinter as tk
+from tkinter import ttk
+from openpyxl import *
+
+root=tk.Tk()
+root.title("The Restaurent")
+
+workbook=load_workbook(r"D:\Mythili\Python\RestaurentExcel.xlsx")
+sheet=workbook.active
+
+starter=["Veg Mancuria","Chilli Panner","Baby Corn","Crispy Corn","Momos","Tomato Soup"]
+main_course=["Panner Butter Masala","Pulkha","Naan","Roti","Vegetable Fried Rice","Bisibele Bath","Hakka Noodles"]
+drinks=["Hot Chocolate","Fruit Punch ","Thumbs Up","Pepsi"]
+deserts=["Fruits Box","Chocolate IceCream","Vanilla IceCream","Butter Scotch IceCream"]
+
+namelabel=tk.Label(root,text="Name: ")
+namelabel.config(font=("Berlin Sans Fb",12))
+namelabel.grid(row=1,column=1,pady=2)
+
+starters_label=tk.Label(root,text="Select Starters: ")
+starters_label.config(font=("Berlin Sans Fb",12))
+starters_label.grid(row=2,column=1,pady=2)
+
+main_course_label=tk.Label(root,text="Select Main Course: ")
+main_course_label.config(font=("Berlin Sans Fb",12))
+main_course_label.grid(row=3,column=1,pady=2)
+
+drinks_label=tk.Label(root,text="Select Drinks: ")
+drinks_label.config(font=("Berlin Sans Fb",12))
+drinks_label.grid(row=4,column=1,pady=2)
+
+deserts_label=tk.Label(root,text="Select Desert: ")
+deserts_label.config(font=("Berlin Sans Fb",12))
+deserts_label.grid(row=5,column=1,pady=2)
+
+tip_label=tk.Label(root,text="Select Tip: ")
+tip_label.config(font=("Berlin Sans Fb",12))
+tip_label.grid(row=6,column=1,pady=2)
+
+name_var=tk.StringVar()
+name_entry=tk.Entry(root,textvariable=name_var)
+name_entry.grid(row=1,column=2)
+
+starters_var=tk.StringVar()
+starters_box=ttk.Combobox(root,width=27,values=starter,textvariable=starters_var)
+starters_box.grid(row=2,column=2)
+
+main_course_var=tk.StringVar()
+main_box=ttk.Combobox(root,width=27,values=main_course,textvariable=main_course_var)
+main_box.grid(row=3,column=2)
+
+drinks_var=tk.StringVar()
+drinks_box=ttk.Combobox(root,width=27,values=drinks,textvariable=drinks_var)
+drinks_box.grid(row=4,column=2)
+
+desert_var=tk.StringVar()
+desert_box=ttk.Combobox(root,width=27,values=deserts,textvariable=desert_var)
+desert_box.grid(row=5,column=2)
+
+tip_var=tk.StringVar()
+tip_entry=tk.Entry(root,textvariable=tip_var)
+tip_entry.grid(row=6,column=2)
+
+def submit():
+
+  name_data=name_var.get()
+  starters_data=starters_var.get()
+  main_course_data=main_course_var.get()
+  drinks_data=drinks_var.get()
+  deserts_data=desert_var.get()
+  tip_data=tip_var.get()
+
+  current_row=sheet.max_row
+
+  sheet.cell(row=current_row+1, column=1).value = name_data
+  sheet.cell(row=current_row+1, column=2).value = starters_data
+  sheet.cell(row=current_row+1, column=3).value = main_course_data
+  sheet.cell(row=current_row+1, column=4).value = drinks_data
+  sheet.cell(row=current_row+1, column=5).value = deserts_data
+  sheet.cell(row=current_row+1, column=6).value = tip_data
+
+  workbook  .save(r"D:\Mythili\Python\RestaurentExcel.xlsx")
+  name_entry.focus_set()
+  name_entry.delete(0,tk.END)
+
+  starters_box.focus_set()
+  starters_box.delete(0,tk.END)
+
+  main_box.focus_set()
+  main_box.delete(0,tk.END)
+
+  drinks_box.focus_set()
+  drinks_box.delete(0,tk.END)
+
+  desert_box.focus_set()
+  desert_box.delete(0,tk.END)
+
+  tip_entry.focus_set()
+  tip_entry.delete(0,tk.END)
+
+btn=tk.Button(root,text="Submit",command=submit)
+btn.config(font=("Berlin Sans FB",22))
+btn.grid(row=7,column=2)
+
+root.mainloop()
